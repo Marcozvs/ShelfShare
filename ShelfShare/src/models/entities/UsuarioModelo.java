@@ -5,7 +5,7 @@ import models.enums.TipoUsuarioEnum;
 
 import models.interfaces.IUsuario;
 
-public class UsuarioModelo implements IUsuario{
+public class UsuarioModelo implements IUsuario {
     private int id;
     private String nome;
     private int idade;
@@ -15,7 +15,7 @@ public class UsuarioModelo implements IUsuario{
     private String Usuario;
     private TipoLivroEnum tiposFavLivros;
 
-    public UsuarioModelo(int id, String nome, int idade, char sexo, TipoUsuarioEnum tipoUsuario,
+    public void Usuario(int id, String nome, int idade, char sexo, TipoUsuarioEnum tipoUsuario,
                    String senha, String Usuario, TipoLivroEnum tiposFavLivros) {
         this.id = id;
         this.nome = nome;
