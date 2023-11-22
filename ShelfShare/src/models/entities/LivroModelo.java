@@ -9,12 +9,13 @@ public class LivroModelo implements ILivro {
     private float nota;
     private float notaMedia;
 
-    public void Livro(int id, String titulo, String autor, float nota, float notaMedia) {
+    public ILivro Livro (int id, String titulo, String autor, float nota, float notaMedia) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.nota = nota;
         this.notaMedia = notaMedia;
+        return this;
     }
 
     public int getId() {
