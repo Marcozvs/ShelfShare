@@ -18,9 +18,9 @@ public class UserService {
         this.userRepository = new UserRepository();
     }
 
-    public boolean createUser(int id, String name, int age, char genere, UserTypeEnum userType, String password, String user, TipoLivroEnum tiposFavLivros){
+    public boolean createUser(UserModel user){
         UserModel userModel = new UserModel();
-        userModel.User(id, name, age, genere, userType, password, user,tiposFavLivros);
+        userModel.User(user.id, user.getName(), user.getAge(), user.getGenere(), user.getUserType(), user.getPassword(), user.getUser(), user.getBookFavType());
         return this.userRepository.addUserModel(userModel);
 	}
 
