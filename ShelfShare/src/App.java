@@ -1,5 +1,8 @@
+import views.LoginView;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        LoginView loginView = new LoginView();
+		loginView.run();
     }
 }
