@@ -1,6 +1,6 @@
 package models.enums;
 
-public enum TipoUsuarioEnum {
+public enum UserTypeEnum {
     COMUM,
     ADMIN
 }
