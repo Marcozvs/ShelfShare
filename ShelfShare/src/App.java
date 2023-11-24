@@ -1,5 +1,8 @@
+import views.Authentication.AuthenticationView;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        AuthenticationView authenticationView = new AuthenticationView();
+		authenticationView.AuthenticationView();
     }
 }

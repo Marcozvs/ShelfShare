@@ -54,10 +54,8 @@ public class LoginForm extends JFrame {
             }
         });
 
-        // Adiciona o painel à janela
         add(panel);
 
-        // Exibe a janela
         setVisible(true);
     }
 
