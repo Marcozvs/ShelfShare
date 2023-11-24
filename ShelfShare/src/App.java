@@ -1,8 +1,8 @@
-import views.LoginView;
+import views.Authentication.AuthenticationView;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        LoginView loginView = new LoginView();
-		loginView.run();
+        AuthenticationView authenticationView = new AuthenticationView();
+		authenticationView.AuthenticationView();
     }
 }
