@@ -1,6 +1,10 @@
 package views.authentication;
 
 import javax.swing.*;
+
+import controllers.UserController;
+import models.entities.UserModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +12,7 @@ import java.awt.event.ActionListener;
 public class RegisterView extends JFrame {
 
     private static final String[] USER_TYPES = {"Comum"};
+    private static final String[] BOOKS_GENERE_TYPES = {"Romance", "Técnico", "Drama"};
     private static final String INVALID_AGE_MESSAGE = "Por favor, insira uma idade válida (número inteiro).";
     private static final String PASSWORD_MISMATCH_MESSAGE = "A senha e a confirmação de senha não correspondem.";
     private static final String REGISTRATION_SUCCESS_MESSAGE = "Registro bem-sucedido!";
@@ -21,6 +26,7 @@ public class RegisterView extends JFrame {
     private JRadioButton femaleRadioButton;
     private ButtonGroup genderButtonGroup;
     private JComboBox<String> userTypeComboBox;
+    private JComboBox<String> bookGenereTypeComboBox;
     private JButton registerButton;
 
     public RegisterView() {
@@ -46,6 +52,7 @@ public class RegisterView extends JFrame {
         addGenderFields(panel);
         addFormField(panel, "Idade:", ageField = new JTextField(5));
         addFormField(panel, "Tipo de Usuário:", userTypeComboBox = new JComboBox<>(USER_TYPES));
+        addFormField(panel, "Tipo de livro favorito:", bookGenereTypeComboBox = new JComboBox<>(BOOKS_GENERE_TYPES));
 
         gbc.gridx = 0;
         gbc.gridy = panel.getComponentCount();
@@ -111,6 +118,7 @@ public class RegisterView extends JFrame {
         String confirmedPassword = new String(confirmPassword.getPassword());
         String nameValue = name.getText();
         String selectedUserType = (String) userTypeComboBox.getSelectedItem();
+        String selectedBookGenereType = (String) bookGenereTypeComboBox.getSelectedItem();
         int age;
 
         try {
@@ -126,6 +134,18 @@ public class RegisterView extends JFrame {
         }
 
         String selectedGender = maleRadioButton.isSelected() ? "Masculino" : "Feminino";
+
+        UserModel userModel = new UserModel(nameValue, age, selectedGender, selectedUserType, newPassword, newUsername, selectedBookGenereType);
+
+        UserController userController = new UserController();
+        boolean registrationSuccess = userController.createUser(userModel);
+
+        if (registrationSuccess) {
+            JOptionPane.showMessageDialog(this, REGISTRATION_SUCCESS_MESSAGE);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Falha no registro. Por favor, tente novamente.");
+        }
 
         System.out.println("Nome de Usuário: " + newUsername);
         System.out.println("Senha: " + newPassword);

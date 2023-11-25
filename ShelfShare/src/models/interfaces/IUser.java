@@ -1,8 +1,5 @@
 package models.interfaces;
 
-import models.enums.TipoLivroEnum;
-import models.enums.UserTypeEnum;
-
 public interface IUser {
     int getId();
 
@@ -16,13 +13,13 @@ public interface IUser {
 
     void setAge(int age);
 
-    char getGenere();
+    String getGenere();
 
-    void setGenere(char genere);
+    void setGenere(String genere);
 
-    UserTypeEnum getUserType();
+    String getUserType();
 
-    void setUserType(UserTypeEnum userType);
+    void setUserType(String userType);
 
     String getPassword();
 
@@ -32,7 +29,7 @@ public interface IUser {
 
     void setUser(String user);
 
-    TipoLivroEnum getBookFavType();
+    String getBookFavType();
 
-    void setBookFavType(TipoLivroEnum bookFavType);
+    void setBookFavType(String bookFavType);
 }

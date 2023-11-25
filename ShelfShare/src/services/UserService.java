@@ -18,11 +18,10 @@ public class UserService {
         this.userRepository = new UserRepository();
     }
 
-    public boolean createUser(UserModel user){
-        UserModel userModel = new UserModel();
-        userModel.User(user.id, user.getName(), user.getAge(), user.getGenere(), user.getUserType(), user.getPassword(), user.getUser(), user.getBookFavType());
-        return this.userRepository.addUserModel(userModel);
-	}
+    public boolean createUser(UserModel userModel) {
+        //Criar usuário no banco de dados ou em alguma estrutura de dados
+        return true;
+    }
 
     public List<IUser> GetAllUsers(){
 

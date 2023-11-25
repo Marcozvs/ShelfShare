@@ -1,22 +1,22 @@
 package models.entities;
 
-import models.enums.TipoLivroEnum;
-import models.enums.UserTypeEnum;
 import models.interfaces.IUser;
 
 public class UserModel implements IUser {
-    public int id;
+    private static int nextId = 1;
+
+    private int id;
     private String name;
     private int age;
-    private char genere;
-    private UserTypeEnum userType;
+    private String genere;
+    private String userType;
     private String password;
     private String user;
-    private TipoLivroEnum bookFavType;
+    private String bookFavType;
 
-    public void User(int id, String name, int age, char genere, UserTypeEnum userType,
-                   String password, String user, TipoLivroEnum bookFavType) {
-        this.id = id;
+    public UserModel(String name, int age, String genere, String userType,
+                   String password, String user, String bookFavType) {
+        this.id = nextId++;
         this.name = name;
         this.age = age;
         this.genere = genere;
@@ -24,6 +24,10 @@ public class UserModel implements IUser {
         this.password = password;
         this.user = user;
         this.bookFavType = bookFavType;
+    }
+
+    public UserModel() {
+        this.id = nextId++;
     }
 
     public int getId() {
@@ -50,19 +54,19 @@ public class UserModel implements IUser {
         this.age = age;
     }
 
-    public char getGenere() {
+    public String getGenere() {
         return genere;
     }
 
-    public void setGenere(char genere) {
+    public void setGenere(String genere) {
         this.genere = genere;
     }
 
-    public UserTypeEnum getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(UserTypeEnum userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 
@@ -82,11 +86,11 @@ public class UserModel implements IUser {
         this.user = user;
     }
 
-    public TipoLivroEnum getBookFavType() {
+    public String getBookFavType() {
         return bookFavType;
     }
 
-    public void setBookFavType(TipoLivroEnum bookFavType) {
+    public void setBookFavType(String bookFavType) {
         this.bookFavType = bookFavType;
     }
 }
