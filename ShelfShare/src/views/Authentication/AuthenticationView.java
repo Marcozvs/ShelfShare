@@ -1,51 +1,41 @@
-package views.Authentication;
+package views.authentication;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 
 public class AuthenticationView extends JFrame {
 
     private JTextField username;
     private JPasswordField password;
 
-    public void AuthenticationView() {
+    public AuthenticationView() {
         setTitle("ShelfShare");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel();
-        JLabel usernameLabel = new JLabel("Usuário:");
-        username = new JTextField(20);
-        JLabel passwordLabel = new JLabel("Senha:");
-        password = new JPasswordField(20);
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        addFormField(panel, "Usuário:", username = new JTextField(20));
+        addFormField(panel, "Senha:", password = new JPasswordField(20));
+
         JButton loginButton = new JButton("Login");
         JButton registerButton = new JButton("Registrar");
 
-        panel.add(usernameLabel);
-        panel.add(username);
-        panel.add(passwordLabel);
-        panel.add(password);
-        panel.add(new JLabel());
-        panel.add(loginButton);
-        panel.add(registerButton);
+        gbc.gridx = 0;
+        gbc.gridy = panel.getComponentCount();
+        gbc.gridwidth = 2;
+        panel.add(loginButton, gbc);
 
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String enteredUsername = username.getText();
-                String enteredPassword = new String(password.getPassword());
+        gbc.gridy++;
+        panel.add(registerButton, gbc);
 
-                if (checkCredentials(enteredUsername, enteredPassword)) {
-                    JOptionPane.showMessageDialog(AuthenticationView.this, "Login bem-sucedido!");
-                } else {
-                    JOptionPane.showMessageDialog(AuthenticationView.this, "Login falhou. Tente novamente.");
-                }
-            }
-        });
-
+        loginButton.addActionListener(new LoginButtonHandler());
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,39 +47,49 @@ public class AuthenticationView extends JFrame {
         setVisible(true);
     }
 
+    private void addFormField(JPanel panel, String label, JComponent component) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = panel.getComponentCount();
+        gbc.gridwidth = 1;
+        panel.add(new JLabel(label), gbc);
+
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(component, gbc);
+
+        panel.add(Box.createRigidArea(new Dimension(5, 0)));
+    }
+
     private void openRegisterScreen() {
         RegisterView registerView = new RegisterView();
         registerView.setVisible(true);
     }
 
-    private boolean checkCredentials(String enteredUsername, String enteredPassword) {
+    private class LoginButtonHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String enteredUsername = username.getText();
+            String enteredPassword = new String(password.getPassword());
 
-        if ("teste".equals(enteredUsername) && "123".equals(enteredPassword)) {
-            System.out.println(enteredUsername);
-            System.out.println(enteredPassword);
-            return true;
-        } else {
-            System.out.println(enteredUsername);
-            System.out.println(enteredPassword);
-           return false;
+            if (checkCredentials(enteredUsername, enteredPassword)) {
+                JOptionPane.showMessageDialog(AuthenticationView.this, "Login bem-sucedido!");
+            } else {
+                JOptionPane.showMessageDialog(AuthenticationView.this, "Login falhou. Tente novamente.");
+            }
         }
-        
-        // String jdbcUrl = "jdbc:mysql://localhost:3306/mydb?useSSL=false";
-        // String dbUser = "seuUsuario";
-        // String dbPassword = "suaSenha";
+    }
 
-        // try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)) {
-        //     String sql = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
-        //     try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-        //         preparedStatement.setString(1, enteredUsername);
-        //         preparedStatement.setString(2, enteredPassword);
-        //         try (ResultSet resultSet = preparedStatement.executeQuery()) {
-        //             return resultSet.next();
-        //         }
-        //     }
-        // } catch (SQLException e) {
-        //     e.printStackTrace();
-        //     return false;
-        // }
+    private boolean checkCredentials(String enteredUsername, String enteredPassword) {
+        System.out.println("Username: " + enteredUsername);
+        System.out.println("Password: " + enteredPassword);
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new AuthenticationView();
+        });
     }
 }
