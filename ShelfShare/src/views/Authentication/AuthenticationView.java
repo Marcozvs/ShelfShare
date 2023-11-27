@@ -1,6 +1,9 @@
 package views.Authentication;
 
 import javax.swing.*;
+
+import controllers.UserController;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -81,7 +84,12 @@ public class AuthenticationView extends JFrame {
     }
 
     private boolean checkCredentials(String enteredUsername, String enteredPassword) {
-        return false;
+        UserController userController = new UserController();
+        if (userController.getUser(enteredUsername, enteredPassword)) {
+            return true;
+        } else {
+            return false;
+        }	
     }
 
     public static void main(String[] args) {

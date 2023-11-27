@@ -25,6 +25,32 @@ public class UserRepository {
         }
     }
 
+	public UserModel getUserByUsernameAndPassword(String username, String password) {
+        try {
+            String query = "SELECT * FROM USUARIO WHERE Usuario = ? AND Senha = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return new UserModel(
+                            resultSet.getString("Nome"),
+                            resultSet.getInt("Idade"),
+                            resultSet.getString("Sexo"),
+                            resultSet.getString("TipoUsuario"),
+                            resultSet.getString("Senha"),
+                            resultSet.getString("Usuario"),
+                            resultSet.getString("TiposFavoritos")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean addUserModel(UserModel user) {
         try {
             String query = "INSERT INTO USUARIO (Id, Nome, Idade, Sexo, Senha, Usuario, TiposFavoritos) VALUES (?, ?, ?, ?, ?, ?, ?)";

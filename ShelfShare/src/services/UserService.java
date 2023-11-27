@@ -16,10 +16,22 @@ public class UserService {
         this.userRepository = new UserRepository();
     }
 
+    public boolean getUser(String username, String password) {
+        UserModel user = userRepository.getUserByUsernameAndPassword(username, password);
+        if (user != null) {
+            return true;
+        } else {
+            return false;
+        }	
+	}
+
     public boolean createUser(UserModel userModel) {
-        //Criar usuário no banco de dados ou em alguma estrutura de dados
-        boolean users = this.userRepository.addUserModel(userModel);
-        return true;
+        if(this.userRepository.addUserModel(userModel)){
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     public List<IUser> GetAllUsers(){
