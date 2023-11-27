@@ -1,9 +1,11 @@
 package models.interfaces;
 
-public interface IUser {
-    int getId();
+import java.util.UUID;
 
-    void setId(int id);
+public interface IUser {
+    UUID getId();
+
+    void setId(UUID id);
 
     String getName();
 
@@ -13,9 +15,9 @@ public interface IUser {
 
     void setAge(int age);
 
-    String getGenere();
+    String getGender();
 
-    void setGenere(String genere);
+    void setGender(String gender);
 
     String getUserType();
 
@@ -25,9 +27,9 @@ public interface IUser {
 
     void setPassword(String password);
 
-    String getUser();
+    String getUsername();
 
-    void setUser(String user);
+    void setUsername(String user);
 
     String getBookFavType();
 

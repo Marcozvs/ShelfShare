@@ -1,40 +1,49 @@
 package models.entities;
 
+import java.util.UUID;
+
 import models.interfaces.IUser;
 
 public class UserModel implements IUser {
-    private static int nextId = 1;
 
-    private int id;
+    private UUID id;
     private String name;
     private int age;
-    private String genere;
+    private String gender;
     private String userType;
     private String password;
-    private String user;
+    private String username;
     private String bookFavType;
 
-    public UserModel(String name, int age, String genere, String userType,
-                   String password, String user, String bookFavType) {
-        this.id = nextId++;
+    public UserModel(String name, int age, String gender, String userType,
+                   String password, String username, String bookFavType) {
+        this.id = UUID.randomUUID();
         this.name = name;
         this.age = age;
-        this.genere = genere;
+        this.gender = gender;
         this.userType = userType;
         this.password = password;
-        this.user = user;
+        this.username = username;
         this.bookFavType = bookFavType;
     }
 
-    public UserModel() {
-        this.id = nextId++;
+    public UserModel(String name, int age, String gender,
+                   String password, String username, String bookFavType) {
+        this.id = UUID.randomUUID();
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.password = password;
+        this.username = username;
+        this.bookFavType = bookFavType;
     }
+    
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -54,12 +63,12 @@ public class UserModel implements IUser {
         this.age = age;
     }
 
-    public String getGenere() {
-        return genere;
+    public String getGender() {
+        return gender;
     }
 
-    public void setGenere(String genere) {
-        this.genere = genere;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getUserType() {
@@ -78,12 +87,12 @@ public class UserModel implements IUser {
         this.password = password;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getBookFavType() {

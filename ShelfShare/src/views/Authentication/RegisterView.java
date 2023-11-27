@@ -1,4 +1,4 @@
-package views.authentication;
+package views.Authentication;
 
 import javax.swing.*;
 
@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 public class RegisterView extends JFrame {
 
     private static final String[] USER_TYPES = {"Comum"};
-    private static final String[] BOOKS_GENERE_TYPES = {"Romance", "Técnico", "Drama"};
+    private static final String[] BOOKS_GENDER_TYPES = {"Romance", "Técnico", "Drama"};
     private static final String INVALID_AGE_MESSAGE = "Por favor, insira uma idade válida (número inteiro).";
     private static final String PASSWORD_MISMATCH_MESSAGE = "A senha e a confirmação de senha não correspondem.";
     private static final String REGISTRATION_SUCCESS_MESSAGE = "Registro bem-sucedido!";
@@ -25,8 +25,7 @@ public class RegisterView extends JFrame {
     private JRadioButton maleRadioButton;
     private JRadioButton femaleRadioButton;
     private ButtonGroup genderButtonGroup;
-    private JComboBox<String> userTypeComboBox;
-    private JComboBox<String> bookGenereTypeComboBox;
+    private JComboBox<String> bookGenderTypeComboBox;
     private JButton registerButton;
 
     public RegisterView() {
@@ -51,8 +50,7 @@ public class RegisterView extends JFrame {
         addFormField(panel, "Confirmar Senha:", confirmPassword = new JPasswordField(20));
         addGenderFields(panel);
         addFormField(panel, "Idade:", ageField = new JTextField(5));
-        addFormField(panel, "Tipo de Usuário:", userTypeComboBox = new JComboBox<>(USER_TYPES));
-        addFormField(panel, "Tipo de livro favorito:", bookGenereTypeComboBox = new JComboBox<>(BOOKS_GENERE_TYPES));
+        addFormField(panel, "Tipo de livro favorito:", bookGenderTypeComboBox = new JComboBox<>(BOOKS_GENDER_TYPES));
 
         gbc.gridx = 0;
         gbc.gridy = panel.getComponentCount();
@@ -117,8 +115,7 @@ public class RegisterView extends JFrame {
         String newPassword = new String(password.getPassword());
         String confirmedPassword = new String(confirmPassword.getPassword());
         String nameValue = name.getText();
-        String selectedUserType = (String) userTypeComboBox.getSelectedItem();
-        String selectedBookGenereType = (String) bookGenereTypeComboBox.getSelectedItem();
+        String selectedBookGenderType = (String) bookGenderTypeComboBox.getSelectedItem();
         int age;
 
         try {
@@ -135,7 +132,7 @@ public class RegisterView extends JFrame {
 
         String selectedGender = maleRadioButton.isSelected() ? "Masculino" : "Feminino";
 
-        UserModel userModel = new UserModel(nameValue, age, selectedGender, selectedUserType, newPassword, newUsername, selectedBookGenereType);
+        UserModel userModel = new UserModel(nameValue, age, selectedGender, newPassword, newUsername, selectedBookGenderType);
 
         UserController userController = new UserController();
         boolean registrationSuccess = userController.createUser(userModel);
@@ -146,13 +143,6 @@ public class RegisterView extends JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Falha no registro. Por favor, tente novamente.");
         }
-
-        System.out.println("Nome de Usuário: " + newUsername);
-        System.out.println("Senha: " + newPassword);
-        System.out.println("Nome: " + nameValue);
-        System.out.println("Sexo: " + selectedGender);
-        System.out.println("Idade: " + age);
-        System.out.println("Tipo de Usuário: " + selectedUserType);
 
         JOptionPane.showMessageDialog(this, REGISTRATION_SUCCESS_MESSAGE);
         dispose();

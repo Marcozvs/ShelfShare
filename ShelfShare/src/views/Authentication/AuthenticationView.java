@@ -1,4 +1,4 @@
-package views.authentication;
+package views.Authentication;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,9 +81,6 @@ public class AuthenticationView extends JFrame {
     }
 
     private boolean checkCredentials(String enteredUsername, String enteredPassword) {
-        System.out.println("Username: " + enteredUsername);
-        System.out.println("Password: " + enteredPassword);
-
         return false;
     }
 
