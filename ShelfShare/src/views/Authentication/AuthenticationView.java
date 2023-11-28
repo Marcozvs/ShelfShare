@@ -2,6 +2,7 @@ package views.Authentication;
 
 import controllers.UserController;
 import models.interfaces.IUser;
+import utils.AuthenticationState;
 import views.Users.UserListView;
 
 import javax.swing.*;
@@ -69,19 +70,19 @@ public class AuthenticationView extends JFrame {
     }
 
     private class LoginButtonHandler implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String enteredUsername = username.getText();
-            String enteredPassword = new String(password.getPassword());
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String enteredUsername = username.getText();
+        String enteredPassword = new String(password.getPassword());
 
-            if (checkCredentials(enteredUsername, enteredPassword)) {
-                // Se o login for bem-sucedido, abra a UserListView
-                openUserListView();
-            } else {
-                JOptionPane.showMessageDialog(AuthenticationView.this, "Login falhou. Tente novamente.");
-            }
+        if (checkCredentials(enteredUsername, enteredPassword)) {
+            AuthenticationState.setLoggedInUser(enteredUsername);
+            openUserListView();
+        } else {
+            JOptionPane.showMessageDialog(AuthenticationView.this, "Login falhou. Tente novamente.");
         }
     }
+}
 
     private boolean checkCredentials(String enteredUsername, String enteredPassword) {
         UserController userController = new UserController();
@@ -92,7 +93,6 @@ public class AuthenticationView extends JFrame {
         UserController userController = new UserController();
         IUser[] userList = userController.getAllUsers();
         new UserListView(userList).setVisible(true);
-        // Feche a tela de autenticação após o login bem-sucedido
         dispose();
     }
 

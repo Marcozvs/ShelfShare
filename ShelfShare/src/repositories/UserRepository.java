@@ -81,7 +81,7 @@ public class UserRepository {
                         resultSet.getString("Nome"),
                         resultSet.getInt("Idade"),
                         resultSet.getString("Sexo"),
-                        parseUserTypeEnum(resultSet.getString("TipoUsuario")), // Correção aqui
+                        parseUserTypeEnum(resultSet.getString("TipoUsuario")),
                         resultSet.getString("Senha"),
                         resultSet.getString("Usuario"),
                         resultSet.getString("TiposFavoritos")

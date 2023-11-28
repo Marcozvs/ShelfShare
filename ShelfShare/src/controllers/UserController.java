@@ -7,6 +7,8 @@ public class UserController {
 
     private final UserService userService;
 
+    private static IUser currentUser;
+
     public UserController() {
         this.userService = new UserService();
     }
@@ -21,5 +23,9 @@ public class UserController {
 
     public IUser[] getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    public static IUser getCurrentUser() {
+        return currentUser;
     }
 }
