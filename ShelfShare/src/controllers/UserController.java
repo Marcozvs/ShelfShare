@@ -18,4 +18,8 @@ public class UserController {
     public boolean createUser(IUser userModel) {
         return userService.createUser(userModel);
     }
+
+    public IUser[] getAllUsers() {
+        return userService.getAllUsers();
+    }
 }

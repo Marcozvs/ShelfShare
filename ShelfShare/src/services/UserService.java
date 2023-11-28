@@ -18,4 +18,8 @@ public class UserService {
     public boolean createUser(IUser userModel) {
         return userRepository.addUser(userModel);
     }
+
+    public IUser[] getAllUsers() {
+        return userRepository.getAllUsers();
+    }
 }
