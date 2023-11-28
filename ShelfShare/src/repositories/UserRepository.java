@@ -5,110 +5,57 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
 
-import models.entities.UserModel;
+import models.interfaces.IUser;
 
 public class UserRepository {
     private Connection connection;
 
     public UserRepository() {
+        this.connection = createConnection();
+    }
+
+    private Connection createConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/SHELFSHARE";
             String user = "root";
             String password = "";
-            connection = DriverManager.getConnection(url, user, password);
-
+            return DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Falha ao criar conexão com o banco de dados", e);
         }
     }
 
-	public UserModel getUserByUsernameAndPassword(String username, String password) {
-        try {
-            String query = "SELECT * FROM USUARIO WHERE Usuario = ? AND Senha = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
+    public boolean getUser(String username, String password) {
+        String query = "SELECT * FROM USUARIO WHERE Usuario = ? AND Senha = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
 
-                ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    return new UserModel(
-                            resultSet.getString("Nome"),
-                            resultSet.getInt("Idade"),
-                            resultSet.getString("Sexo"),
-                            resultSet.getString("TipoUsuario"),
-                            resultSet.getString("Senha"),
-                            resultSet.getString("Usuario"),
-                            resultSet.getString("TiposFavoritos")
-                    );
-                }
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public boolean addUserModel(UserModel user) {
-        try {
-            String query = "INSERT INTO USUARIO (Id, Nome, Idade, Sexo, Senha, Usuario, TiposFavoritos) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, user.getId().toString());
-                preparedStatement.setString(2, user.getName());
-                preparedStatement.setInt(3, user.getAge());
-                preparedStatement.setString(4, user.getGender());
-                preparedStatement.setString(5, user.getPassword());
-                preparedStatement.setString(6, user.getUsername());
-                preparedStatement.setString(7, user.getBookFavType());
-
-                int rowsAffected = preparedStatement.executeUpdate();
-                return rowsAffected > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new RuntimeException("Erro ao obter usuário", e);
         }
     }
 
-    // public boolean removeUserModel(int id) {
-    //     try {
-    //         String query = "DELETE FROM USUARIO WHERE Id = ?";
-    //         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-    //             preparedStatement.setInt(1, id);
+    public boolean addUser(IUser user) {
+        String query = "INSERT INTO USUARIO (Id, Nome, Idade, Sexo, Senha, Usuario, TiposFavoritos) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, user.getId().toString());
+            preparedStatement.setString(2, user.getName());
+            preparedStatement.setInt(3, user.getAge());
+            preparedStatement.setString(4, user.getGender());
+            preparedStatement.setString(5, user.getPassword());
+            preparedStatement.setString(6, user.getUsername());
+            preparedStatement.setString(7, user.getBookFavType());
 
-    //             int rowsAffected = preparedStatement.executeUpdate();
-    //             return rowsAffected > 0;
-    //         }
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         return false;
-    //     }
-    // }
-
-    public HashSet<UserModel> getUsers() {
-        HashSet<UserModel> users = new HashSet<>();
-        try {
-            String query = "SELECT * FROM USUARIO";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    UserModel user = new UserModel(
-                            resultSet.getString("Nome"),
-                            resultSet.getInt("Idade"),
-                            resultSet.getString("Sexo"),
-                            resultSet.getString("TipoUsuario"),
-                            resultSet.getString("Senha"),
-                            resultSet.getString("Usuario"),
-                            resultSet.getString("TiposFavoritos")
-                    );
-                    users.add(user);
-                }
-            }
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao adicionar usuário", e);
         }
-        return users;
     }
 }

@@ -2,6 +2,8 @@ package models.interfaces;
 
 import java.util.UUID;
 
+import models.enums.UserTypeEnum;
+
 public interface IUser {
     UUID getId();
 
@@ -19,9 +21,9 @@ public interface IUser {
 
     void setGender(String gender);
 
-    String getUserType();
+    UserTypeEnum getUserType();
 
-    void setUserType(String userType);
+    void setUserType(UserTypeEnum userType);
 
     String getPassword();
 

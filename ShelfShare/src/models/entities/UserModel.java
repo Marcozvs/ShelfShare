@@ -2,6 +2,7 @@ package models.entities;
 
 import java.util.UUID;
 
+import models.enums.UserTypeEnum;
 import models.interfaces.IUser;
 
 public class UserModel implements IUser {
@@ -10,12 +11,12 @@ public class UserModel implements IUser {
     private String name;
     private int age;
     private String gender;
-    private String userType;
+    private UserTypeEnum userType;
     private String password;
     private String username;
     private String bookFavType;
 
-    public UserModel(String name, int age, String gender, String userType,
+    public UserModel(String name, int age, String gender, UserTypeEnum userType,
                    String password, String username, String bookFavType) {
         this.id = UUID.randomUUID();
         this.name = name;
@@ -36,6 +37,10 @@ public class UserModel implements IUser {
         this.password = password;
         this.username = username;
         this.bookFavType = bookFavType;
+    }
+
+    public UserModel() {
+        this.id = UUID.randomUUID();
     }
     
 
@@ -71,11 +76,11 @@ public class UserModel implements IUser {
         this.gender = gender;
     }
 
-    public String getUserType() {
+    public UserTypeEnum getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserTypeEnum userType) {
         this.userType = userType;
     }
 

@@ -1,17 +1,20 @@
 package views.Authentication;
 
 import javax.swing.*;
-
-import controllers.UserController;
-import models.entities.UserModel;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+
+import controllers.UserController;
+import models.entities.UserModel;
+import models.interfaces.IUser;
 
 public class RegisterView extends JFrame {
 
-    private static final String[] USER_TYPES = {"Comum"};
+    private final IUser userModel;
+    private final UserController userController;
+
     private static final String[] BOOKS_GENDER_TYPES = {"Romance", "Técnico", "Drama"};
     private static final String INVALID_AGE_MESSAGE = "Por favor, insira uma idade válida (número inteiro).";
     private static final String PASSWORD_MISMATCH_MESSAGE = "A senha e a confirmação de senha não correspondem.";
@@ -29,6 +32,8 @@ public class RegisterView extends JFrame {
     private JButton registerButton;
 
     public RegisterView() {
+        this.userModel = new UserModel();
+        this.userController = new UserController();
         initializeUI();
         setupEventHandlers();
     }
@@ -112,40 +117,42 @@ public class RegisterView extends JFrame {
 
     private void processRegistration() {
         String newUsername = username.getText();
-        String newPassword = new String(password.getPassword());
-        String confirmedPassword = new String(confirmPassword.getPassword());
         String nameValue = name.getText();
         String selectedBookGenderType = (String) bookGenderTypeComboBox.getSelectedItem();
         int age;
-
+    
         try {
             age = Integer.parseInt(ageField.getText());
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, INVALID_AGE_MESSAGE);
             return;
         }
-
-        if (!newPassword.equals(confirmedPassword)) {
+    
+        char[] newPasswordChars = password.getPassword();
+        char[] confirmedPasswordChars = confirmPassword.getPassword();
+    
+        if (!Arrays.equals(newPasswordChars, confirmedPasswordChars)) {
             JOptionPane.showMessageDialog(this, PASSWORD_MISMATCH_MESSAGE);
             return;
         }
-
+    
         String selectedGender = maleRadioButton.isSelected() ? "Masculino" : "Feminino";
-
-        UserModel userModel = new UserModel(nameValue, age, selectedGender, newPassword, newUsername, selectedBookGenderType);
-
-        UserController userController = new UserController();
-        boolean registrationSuccess = userController.createUser(userModel);
-
+    
+        userModel.setName(nameValue);
+        userModel.setAge(age);
+        userModel.setGender(selectedGender);
+        userModel.setPassword(new String(newPasswordChars));
+        userModel.setUsername(newUsername);
+        userModel.setBookFavType(selectedBookGenderType);
+    
+        boolean registrationSuccess = this.userController.createUser(this.userModel);
+    
         if (registrationSuccess) {
             JOptionPane.showMessageDialog(this, REGISTRATION_SUCCESS_MESSAGE);
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Falha no registro. Por favor, tente novamente.");
         }
-
-        JOptionPane.showMessageDialog(this, REGISTRATION_SUCCESS_MESSAGE);
-        dispose();
     }
 
     public static void main(String[] args) {
