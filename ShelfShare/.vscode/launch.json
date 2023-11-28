@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "RegisterView",
+            "request": "launch",
+            "mainClass": "views.Authentication.RegisterView",
+            "projectName": "ShelfShare_18441697"
+        },
+        {
+            "type": "java",
+            "name": "CadastroLivrosView",
+            "request": "launch",
+            "mainClass": "views.Book.CadastroLivrosView",
+            "projectName": "ShelfShare_18441697"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}

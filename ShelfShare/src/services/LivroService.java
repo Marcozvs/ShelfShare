@@ -1,6 +1,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 //import java.util.HashSet;
 import java.util.List;
 
@@ -11,29 +12,34 @@ import repositories.LivroRepositorio;
 public class LivroService {
 
 
-    public LivroRepositorio livro;
+    public LivroRepositorio livroRepositorio;
     
     public LivroService() {
-        this.livro = new LivroRepositorio();
+        this.livroRepositorio = new LivroRepositorio();
     }
 
 
-    public boolean createLivro(int id, String titulo, String autor, float nota, float notaMedia){
-        LivroModelo book = new LivroModelo();
-        book.Livro(id, titulo, autor, nota, notaMedia);
-        return this.livro.addLivroModelo(book);
-	}
+    public boolean cadastrarLivro(LivroModelo livro) {
+        return livroRepositorio.cadastrarLivro(livro);
+    }
+
+    public boolean removerLivro(LivroModelo livro) {
+        return livroRepositorio.removerLivro(livro);
+    }
+
+    public List<LivroModelo> visualizarLivros() {
+        return livroRepositorio.visualizarLivros();
+    }
 
 
-    public List<ILivro> GetAllLivrosOrdenados(){
-		List<ILivro> livrosFiltrados = new ArrayList<ILivro>(
-				this.livro.getLivros() );
-		
-		livrosFiltrados.sort((o1, o2) -> {
-				return  Float.compare(o1.getNotaMedia(), o2.getNotaMedia()) ;
-		});
-		
-		return livrosFiltrados;
-	}
+
+     public List<ILivro> getAllLivrosOrdenados() {
+        List<ILivro> livrosFiltrados = new ArrayList<>(livroRepositorio.visualizarLivros());
+
+        livrosFiltrados.sort(Comparator.comparingDouble(ILivro::getNotaMedia).reversed());
+
+        return livrosFiltrados;
+    }
+
 	
 }
