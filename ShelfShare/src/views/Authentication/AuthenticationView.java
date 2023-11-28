@@ -1,12 +1,11 @@
 package views.Authentication;
 
 import javax.swing.*;
-
-import controllers.UserController;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import controllers.UserController;
 
 public class AuthenticationView extends JFrame {
 
@@ -14,6 +13,10 @@ public class AuthenticationView extends JFrame {
     private JPasswordField password;
 
     public AuthenticationView() {
+        initializeUI();
+    }
+
+    private void initializeUI() {
         setTitle("ShelfShare");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,12 +42,7 @@ public class AuthenticationView extends JFrame {
         panel.add(registerButton, gbc);
 
         loginButton.addActionListener(new LoginButtonHandler());
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openRegisterScreen();
-            }
-        });
+        registerButton.addActionListener(e -> openRegisterScreen());
 
         add(panel);
         setVisible(true);
@@ -65,8 +63,7 @@ public class AuthenticationView extends JFrame {
     }
 
     private void openRegisterScreen() {
-        RegisterView registerView = new RegisterView();
-        registerView.setVisible(true);
+        new RegisterView().setVisible(true);
     }
 
     private class LoginButtonHandler implements ActionListener {
@@ -85,16 +82,10 @@ public class AuthenticationView extends JFrame {
 
     private boolean checkCredentials(String enteredUsername, String enteredPassword) {
         UserController userController = new UserController();
-        if (userController.getUser(enteredUsername, enteredPassword)) {
-            return true;
-        } else {
-            return false;
-        }	
+        return userController.getUser(enteredUsername, enteredPassword);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new AuthenticationView();
-        });
+        SwingUtilities.invokeLater(AuthenticationView::new);
     }
 }
