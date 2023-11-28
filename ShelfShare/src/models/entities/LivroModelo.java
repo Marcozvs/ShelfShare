@@ -1,5 +1,6 @@
 package models.entities;
 
+import models.enums.TipoLivroEnum;
 import models.interfaces.ILivro;
 
 public class LivroModelo implements ILivro {
@@ -8,15 +9,19 @@ public class LivroModelo implements ILivro {
     private String autor;
     private float nota;
     private float notaMedia;
+    private TipoLivroEnum tipo;
 
-    public ILivro Livro (int id, String titulo, String autor, float nota, float notaMedia) {
+    public LivroModelo(int id, String titulo, String autor, float nota, float notaMedia) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.nota = nota;
         this.notaMedia = notaMedia;
-        return this;
     }
+
+    public LivroModelo() {
+    }
+
 
     public int getId() {
         return id;
@@ -24,6 +29,14 @@ public class LivroModelo implements ILivro {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public TipoLivroEnum getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoLivroEnum tipo) {
+        this.tipo = tipo;
     }
 
     public String getTitulo() {

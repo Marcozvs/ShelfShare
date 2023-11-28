@@ -1,5 +1,7 @@
 package models.interfaces;
 
+import models.enums.TipoLivroEnum;
+
 public interface ILivro {
     int getId();
 
@@ -20,4 +22,8 @@ public interface ILivro {
     float getNotaMedia();
 
     void setNotaMedia(float notaMedia);
+
+    TipoLivroEnum getTipo();
+
+    void setTipo(TipoLivroEnum tipo);
 }
