@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "ShelfShare_f1922ab8"
+        },
+        {
+            "type": "java",
             "name": "RegisterView",
             "request": "launch",
             "mainClass": "views.Authentication.RegisterView",

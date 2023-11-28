@@ -16,6 +16,18 @@ public class UserModel implements IUser {
     private String username;
     private String bookFavType;
 
+    public UserModel(UUID id, String name, int age, String gender, UserTypeEnum userType,
+                   String password, String username, String bookFavType) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.userType = userType;
+        this.password = password;
+        this.username = username;
+        this.bookFavType = bookFavType;
+    }
+
     public UserModel(String name, int age, String gender, UserTypeEnum userType,
                    String password, String username, String bookFavType) {
         this.id = UUID.randomUUID();

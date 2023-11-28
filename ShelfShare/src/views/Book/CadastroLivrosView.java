@@ -72,11 +72,10 @@ public class CadastroLivrosView extends JFrame {
         String notaTexto = textFieldNota.getText();
         TipoLivroEnum tipo = (TipoLivroEnum) comboBoxTipo.getSelectedItem();
 
-        // Verifica se algum campo está vazio
         if (titulo.isEmpty() || autor.isEmpty() || notaTexto.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.", "Erro de Validação",
                     JOptionPane.ERROR_MESSAGE);
-            return; // Sai da função se algum campo estiver vazio
+            return;
         }
 
         try {
