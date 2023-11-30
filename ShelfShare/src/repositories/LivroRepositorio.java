@@ -69,7 +69,7 @@ public class LivroRepositorio {
 						LivroModelo livro = new LivroModelo();
 						livro.setId(resultSet.getInt("Id"));
 						livro.setAutor(resultSet.getString("Autor"));
-						livro.setTipo(TipoLivroEnum.valueOf(resultSet.getString("Tipo")));
+						livro.setTipo(parseLivroTypeEnum(resultSet.getString("Tipo")));
 						livro.setTitulo(resultSet.getString("Titulo"));
 						livro.setNotaMedia(resultSet.getFloat("NotaMedia"));
 						livros.add(livro);
@@ -80,6 +80,20 @@ public class LivroRepositorio {
 			e.printStackTrace();
 		}
 		return livros;
+	}
+
+	private TipoLivroEnum parseLivroTypeEnum(String livroTypeString) {
+
+		switch (livroTypeString) {
+			case "0":
+				return TipoLivroEnum.ROMANCE;
+			case "1":
+				return TipoLivroEnum.TECNICO;
+			case "2":
+				return TipoLivroEnum.DRAMA;
+			default:
+				throw new IllegalArgumentException("Valor desconhecido para TipoLivroEnum: ");
+		}
 	}
 
 }

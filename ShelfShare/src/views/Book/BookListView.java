@@ -11,16 +11,16 @@ public class BookListView extends JFrame {
 
     private JLabel loggedInbookLabel;
 
-    public BookListView(ILivro[] bookList) {
+    public BookListView() {
         if (!AuthenticationState.isLoggedIn()) {
             JOptionPane.showMessageDialog(this, "Usuário não autenticado. Faça login primeiro.");
             // return;
         }
 
-        initializeUI(bookList);
+        initializeUI();
     }
 
-    private void initializeUI(ILivro[] bookList) {
+    private void initializeUI() {
         setTitle("Lista de Livros");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -42,33 +42,33 @@ public class BookListView extends JFrame {
 
         var bookListLivro = livroService.getAllLivrosOrdenados();
 
-        // bookListJList.setModel(bookListModel);
-
         JScrollPane scrollPane = new JScrollPane(bookListJList);
 
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        for (ILivro book : bookList) {
+        for (ILivro book : bookListLivro) {
             bookListModel.addElement(book);
         }
 
-        bookListJList.setCellRenderer(new bookListCellRenderer());
+        bookListJList.setCellRenderer(new BookListCellRenderer());
 
         add(panel);
         setVisible(true);
     }
 
-    private static class bookListCellRenderer extends DefaultListCellRenderer {
+    private static class BookListCellRenderer extends DefaultListCellRenderer {
         @Override
         public Component getListCellRendererComponent(
                 JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
             JLabel renderer = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
+            renderer.setText("<html><h2>Todos os livros cadastrados do sistema.</h2></html>");
+
             if (value instanceof ILivro) {
                 ILivro book = (ILivro) value;
-                String displayText = String.format("<html><b>%s</b>. Autor: %d.Nota Média: %s</html>", book.getTitulo(),
-                        book.getAutor(), book.getNotaMedia());
+                String displayText = String.format("<html><b>Livro: %s</b>. Autor: %s. Nota Média: %.2f</html>",
+                        book.getTitulo(), book.getAutor(), book.getNotaMedia());
                 renderer.setText(displayText);
             }
 
@@ -77,7 +77,6 @@ public class BookListView extends JFrame {
     }
 
     public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(() -> new BookListView(new ILivro[0]));
+        SwingUtilities.invokeLater(() -> new BookListView());
     }
 }
