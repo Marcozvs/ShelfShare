@@ -14,7 +14,7 @@ public class BookListView extends JFrame {
     public BookListView() {
         if (!AuthenticationState.isLoggedIn()) {
             JOptionPane.showMessageDialog(this, "Usuário não autenticado. Faça login primeiro.");
-            // return;
+            return;
         }
 
         initializeUI();

@@ -5,6 +5,7 @@ import javax.swing.*;
 import models.entities.LivroModelo;
 import models.enums.TipoLivroEnum;
 import services.LivroService;
+import utils.AuthenticationState;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,10 @@ public class BookRegisterView extends JFrame {
     private JButton btnCadastrar;
 
     public BookRegisterView() {
+        if (!AuthenticationState.isLoggedIn()) {
+            JOptionPane.showMessageDialog(this, "Usuário não autenticado. Faça login primeiro.");
+            return;
+        }
         initialize();
     }
 
