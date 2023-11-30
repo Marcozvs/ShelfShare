@@ -18,7 +18,7 @@ public class LivroRepositorio {
 	public LivroRepositorio() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			String url = "jdbc:mysql://localhost:3306/SHELFSHARE";
+			String url = "jdbc:mysql://localhost:3306/shelfshare";
 			String user = "root";
 			String password = "";
 			connection = DriverManager.getConnection(url, user, password);

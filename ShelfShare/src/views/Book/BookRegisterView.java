@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CadastroLivrosView extends JFrame {
+public class BookRegisterView extends JFrame {
 
     private JTextField textFieldTitulo;
     private JTextField textFieldAutor;
@@ -18,7 +18,7 @@ public class CadastroLivrosView extends JFrame {
     private JComboBox<TipoLivroEnum> comboBoxTipo;
     private JButton btnCadastrar;
 
-    public CadastroLivrosView() {
+    public BookRegisterView() {
         initialize();
     }
 
@@ -103,7 +103,7 @@ public class CadastroLivrosView extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new CadastroLivrosView();
+                new BookRegisterView();
             }
         });
     }
