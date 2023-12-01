@@ -1,18 +1,22 @@
 package models.entities;
 
+import java.util.UUID;
+
 import models.interfaces.IAvaliacao;
 
 public class AvaliacaoModelo implements IAvaliacao {
     private int id;
-    private int idUsuario;
+    private UUID idUsuario;
     private int idLivro;
     private float notaLivro;
 
-    public void Avaliacao(int id, int idUsuario, int idLivro, float notaLivro) {
-        this.id = id;
+    public AvaliacaoModelo(UUID idUsuario, int idLivro, float notaLivro) {
         this.idUsuario = idUsuario;
         this.idLivro = idLivro;
         this.notaLivro = notaLivro;
+    }
+
+    public AvaliacaoModelo() {
     }
 
     public int getId() {
@@ -23,11 +27,11 @@ public class AvaliacaoModelo implements IAvaliacao {
         this.id = id;
     }
 
-    public int getIdUsuario() {
+    public UUID getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(UUID idUsuario) {
         this.idUsuario = idUsuario;
     }
 

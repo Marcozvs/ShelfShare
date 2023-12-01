@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import models.entities.LivroModelo;
 import models.enums.TipoLivroEnum;
-import services.LivroService;
+import services.BookService;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -87,8 +87,8 @@ public class CadastroLivrosView extends JFrame {
             livroModelo.setTitulo(titulo);
             livroModelo.setTipo(tipo);
 
-            LivroService livroService = new LivroService();
-            if (livroService.cadastrarLivro(livroModelo)) {
+            BookService livroService = new BookService();
+            if (livroService.cadastrarLivro(livroModelo) != null) {
 
                 JOptionPane.showMessageDialog(this, "Livro cadastrado com sucesso!");
             } else {
