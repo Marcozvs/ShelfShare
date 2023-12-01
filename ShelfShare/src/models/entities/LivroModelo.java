@@ -1,5 +1,7 @@
 package models.entities;
 
+import java.util.Objects;
+
 import models.enums.TipoLivroEnum;
 import models.interfaces.ILivro;
 
@@ -21,7 +23,6 @@ public class LivroModelo implements ILivro {
 
     public LivroModelo() {
     }
-
 
     public int getId() {
         return id;
@@ -69,5 +70,23 @@ public class LivroModelo implements ILivro {
 
     public void setNotaMedia(float notaMedia) {
         this.notaMedia = notaMedia;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        LivroModelo that = (LivroModelo) o;
+        return Float.compare(that.notaMedia, notaMedia) == 0 &&
+                Objects.equals(autor, that.autor) &&
+                tipo == that.tipo &&
+                Objects.equals(titulo, that.titulo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(autor, tipo, titulo, notaMedia);
     }
 }

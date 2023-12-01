@@ -1,13 +1,15 @@
 package models.interfaces;
 
+import java.util.UUID;
+
 public interface IAvaliacao {
     int getId();
 
     void setId(int id);
 
-    int getIdUsuario();
+    UUID getIdUsuario();
 
-    void setIdUsuario(int idUsuario);
+    void setIdUsuario(UUID idUsuario);
 
     int getIdLivro();
 

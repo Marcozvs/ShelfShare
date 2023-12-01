@@ -2,14 +2,17 @@ package views.Book;
 
 import javax.swing.*;
 
+import models.entities.AvaliacaoModelo;
 import models.entities.LivroModelo;
 import models.enums.TipoLivroEnum;
-import services.LivroService;
+import services.AvaliacaoService;
+import services.BookService;
 import utils.AuthenticationState;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.UUID;
 
 public class BookRegisterView extends JFrame {
 
@@ -22,7 +25,7 @@ public class BookRegisterView extends JFrame {
     public BookRegisterView() {
         if (!AuthenticationState.isLoggedIn()) {
             JOptionPane.showMessageDialog(this, "Usuário não autenticado. Faça login primeiro.");
-            return;
+            // return;
         }
         initialize();
     }
@@ -88,17 +91,41 @@ public class BookRegisterView extends JFrame {
 
             LivroModelo livroModelo = new LivroModelo();
             livroModelo.setAutor(autor);
-            livroModelo.setNotaMedia(nota);
+            livroModelo.setNota(nota);
             livroModelo.setTitulo(titulo);
             livroModelo.setTipo(tipo);
 
-            LivroService livroService = new LivroService();
-            if (livroService.cadastrarLivro(livroModelo)) {
+            BookService livroService = new BookService();
 
-                JOptionPane.showMessageDialog(this, "Livro cadastrado com sucesso!");
+            if (!livroService.existeLivro(livroModelo)) {
+
+                if (livroService.cadastrarLivro(livroModelo) != null) {
+                    JOptionPane.showMessageDialog(this, "Livro cadastrado com sucesso!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao criar livro!");
+                    return;
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Erro ao criar livro!");
+                livroModelo.setId(livroService.getIdLivro(livroModelo));
             }
+
+            // UserModel user = AuthenticationState.getUser();
+
+            AvaliacaoModelo avalicao = new AvaliacaoModelo();
+            avalicao.setIdLivro(livroModelo.getId());
+            UUID uuid = UUID.fromString("550e8400-e29b-41d4-a716-44665544000");
+
+            avalicao.setIdUsuario(uuid);
+            avalicao.setNotaLivro(livroModelo.getNota());
+
+            AvaliacaoService avaliacaoService = new AvaliacaoService();
+            avaliacaoService.cadastrarAvaliacao(avalicao);
+
+            float NewMedia = livroService.calcularNotaMedia(livroModelo);
+            livroModelo.setNotaMedia(NewMedia);
+
+            livroService.updateLivro(livroModelo);
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Por favor, insira uma nota válida.", "Erro de Validação",
                     JOptionPane.ERROR_MESSAGE);

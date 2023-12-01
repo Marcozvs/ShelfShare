@@ -2,7 +2,7 @@ package views.Book;
 
 import utils.AuthenticationState;
 import models.interfaces.ILivro;
-import services.LivroService;
+import services.BookService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +38,7 @@ public class BookListView extends JFrame {
 
         JList<ILivro> bookListJList = new JList<>(bookListModel);
 
-        LivroService livroService = new LivroService();
+        BookService livroService = new BookService();
 
         var bookListLivro = livroService.getAllLivrosOrdenados();
 
