@@ -422,11 +422,13 @@ public class BooksList extends javax.swing.JFrame {
 
     private void evaluateBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_evaluateBookMouseClicked
         String input = JOptionPane.showInputDialog(this, "Digite a nota do livro:");
+
         if (input != null) {
             try {
+                input = input.replace(",", ".");
                 double grade = Double.parseDouble(input);
 
-                if (grade >= 1 && grade <= 5) {
+                if (grade >= 1 && grade <= 10) {
                     UUID userId = loggedInUser.getId();
                     UUID bookId = bookSelectedId;
 
@@ -444,7 +446,7 @@ public class BooksList extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Erro na avaliação do livro");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Digite uma nota válida (entre 1 e 5).");
+                    JOptionPane.showMessageDialog(this, "Digite uma nota válida (entre 1 e 10).");
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Digite uma nota válida (número decimal).");

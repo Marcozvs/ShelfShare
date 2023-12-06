@@ -421,23 +421,26 @@ public class BookRegister extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_BtnConfirmActionPerformed
-    private boolean validateScore() {
-        String scoreText = txtScore.getText();
+   private boolean validateScore() {
+    String scoreText = txtScore.getText();
 
-        if (!scoreText.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira uma nota válida (apenas números).");
-            return false;
-        }
-
-        float score = Float.parseFloat(scoreText);
-
-        if (score < 0 || score > 10) {
-            JOptionPane.showMessageDialog(this, "A nota do livro deve estar entre 0 e 10.");
-            return false;
-        }
-
-        return true;
+    if (!scoreText.matches("\\d+(\\.\\d+)?(,\\d+)?")) {
+        JOptionPane.showMessageDialog(this, "Por favor, insira uma nota válida (números, ponto ou vírgula).");
+        return false;
     }
+
+    scoreText = scoreText.replace(",", ".");
+
+    float score = Float.parseFloat(scoreText);
+
+    if (score < 0 || score > 10) {
+        JOptionPane.showMessageDialog(this, "A nota do livro deve estar entre 0 e 10.");
+        return false;
+    }
+
+    return true;
+}
+
     private void txtTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTitleActionPerformed
     }//GEN-LAST:event_txtTitleActionPerformed
 
