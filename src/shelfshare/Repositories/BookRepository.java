@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,7 +79,11 @@ public class BookRepository {
     
     public List<BookModel> getAllBooks() {
         List<BookModel> books = new ArrayList<>();
-        String query = "SELECT * FROM LIVRO";
+        String query = "SELECT LIVRO.Id, Autor, Tipo, Titulo, IFNULL(AVG(Notalivro), 0) AS MediaNotas, COUNT(AVALIACAO.IdLivro) AS NumReviews " +
+                       "FROM LIVRO " +
+                       "LEFT JOIN AVALIACAO ON LIVRO.Id = AVALIACAO.IdLivro " +
+                       "GROUP BY LIVRO.Id, Autor, Tipo, Titulo " +
+                       "ORDER BY MediaNotas DESC, NumReviews DESC, Titulo ASC";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -88,18 +93,20 @@ public class BookRepository {
                 String author = resultSet.getString("Autor");
                 int typeValue = resultSet.getInt("Tipo");
                 String title = resultSet.getString("Titulo");
-                float averageScore = resultSet.getFloat("NotaMedia");
+                float averageScore = resultSet.getFloat("MediaNotas");
                 TypeFavBookEnum typeBook = TypeFavBookEnum.fromValue(typeValue);
 
                 BookModel book = new BookModel(id, title, author, averageScore, typeBook);
                 books.add(book);
             }
+
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao obter todos os livros", e);
         }
 
         return books;
     }
+
 
     public boolean updateBook(BookModel book) {
         String query = "UPDATE LIVRO SET Autor=?, Tipo=?, Titulo=?, NotaMedia=? WHERE Id=?";
